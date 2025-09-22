@@ -154,6 +154,8 @@ change the `INPUT_CHECKPOINT_PATH` to `your_output_path`, `TEMPLATE_MODEL` to `B
 
 ## Evaluation
 
+### Don't use ema.safetensors !!!
+
 The evaluation script is located at `scripts/eval/run_geneval.sh`. You can modify the script to set the number of GPUs, model path and the output directory, generated images' resolution, and number of images per prompt.
 
 ```bash
