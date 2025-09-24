@@ -136,6 +136,7 @@ if __name__ == "__main__":
     parser.add_argument('--remove_prefix', action='store_true')
     
     args = parser.parse_args()
+    args.long = False
     gpu_ids = [int(gpu.strip()) for gpu in args.gpus.split(',')]
     num_gpus = len(gpu_ids)
     
