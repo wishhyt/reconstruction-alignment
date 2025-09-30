@@ -145,11 +145,10 @@ def main():
     process_json(args.edit_json, args.result_img_folder, args.origin_img_root, args.num_processes, prompts)
 
 if __name__ == "__main__":
-    # 使用标准的 OpenAI API，不需要 Azure
+
     api_key = openai.api_key
-    model = "gpt-4o-2024-08-06"  # 标准 OpenAI 模型名称
+    model = "gpt-4.1-2025-04-14"
     openai_client = openai.OpenAI(
         api_key=api_key,
-        # 无需指定 azure_endpoint 和 api_version
     )
     main()
