@@ -19,23 +19,16 @@ from xtuner.dataset.utils import expand2square
 
 
 def add_image_token_for_conversations(example):
-    """为对话数据添加图像令牌"""
-
-    # 检查是否有图像字段
     has_image_field = 'image' in example and example['image']
 
     if not has_image_field and 'conversations' in example:
-        # 对于没有图像的样本，在第一个人类对话前添加<image>
         conversations = example['conversations']
 
-        # 检查是否已经有图像令牌
         has_image_token = any('<image>' in str(conv.get('value', '')) for conv in conversations)
 
         if not has_image_token:
-            # 找到第一个人类对话并添加<image>
             for i, conv in enumerate(conversations):
                 if conv.get('from') == 'human' and 'value' in conv:
-                    # 在人类对话前添加<image>
                     conversations[i]['value'] = '<image>\n' + conv['value']
                     break
 
@@ -54,7 +47,7 @@ def load_jsonl(json_file):
 class MARProcessor:
     def __init__(self, image_size):
         self.image_size = image_size
-        self.size = {'height': image_size, 'width': image_size}  # 添加size属性
+        self.size = {'height': image_size, 'width': image_size} 
 
     def __call__(self, image):
         image = expand2square(image, (127, 127, 127))
