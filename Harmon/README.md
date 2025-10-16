@@ -229,7 +229,10 @@ work_dirs/your_experiment/
 Use the script below do the image reconstruction of the Harmon model:
 
 ```bash
-python scripts/image_recon.py --input_image <INPUT_IMAGE> --checkpoint <CHECKPOINT> --prompt "Describe the image in detail."
+python scripts/image_recon.py \
+    --input_image <INPUT_IMAGE> \
+    --checkpoint <CHECKPOINT> \
+    --prompt "Describe the image in detail."
 ```
 
 Use the parallel evaluation script to efficiently evaluate your trained models on multiple benchmarks:
@@ -247,6 +250,7 @@ python scripts/parallel_geneval.py \
 ```
 
 **Example with custom config (for 0.5B model):**
+
 ```bash
 python scripts/parallel_geneval.py \
     --gpus 0,1 \
