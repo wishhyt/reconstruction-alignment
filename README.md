@@ -33,13 +33,15 @@
   <span style="font-size: 1em; color: #555;">UC Berkeley<sup>1</sup>; University of Washington<sup>2</sup></span>
 </div>
 
+> **📖 Want to try RecA on your own architecture?** Please read our [**Reproduction Guide**](./REPRODUCE_GUIDE.md) or its [**Chinese Version**](./REPRODUCE_GUIDE_CN.md) first! It contains crucial details and insights that are essential for successful reproduction.
+
 <div align="center">
   <img src="./assets/DEMO.jpg" alt="" style="width: 100%; margin: 10px 0;">
   <img src="./assets/edit_demo.jpg" alt="" style="width: 100%; margin: 10px 0;">
 </div>
 
 ## 🔥 News
-- **2025.12.6**: Show-o training code is released!
+- **2025.12.6**: Show-o training code is released! And we add a reproduction guide for people to better understand RecA!
 - **2025.12.5**: 🔥 We evaluate our fine-tuned model on [T2I-Compbench](https://github.com/WayneJin0918/SRUM/tree/main/CompBench_eval). Many thanks to [Weiyang](https://waynejin0918.github.io/home/)!
 - **2025.12.5**: OpenUni training code is released!
 - **2025.9.15**: 🔥 Add NF4, INT8, DF11 version of BAGEL-RecA! Thank to @theunlikely!
