@@ -30,7 +30,7 @@
   <img src="Show-o/assets/VQGAN.png" alt="" width="60%">
 </div>
 
-Janus 的其输入和输出分辨率虽然都是 384x384，但输入是 SigLIP features，输出是 VQGAN features，二者之间天然存在 information bottleneck，因此无需特殊处理。
+Janus 的输入输出分辨率虽然都是 384x384，但输入是 SigLIP features，输出是 VQGAN features，二者之间天然存在 information bottleneck，因此无需特殊处理。
 
 ## 尽可能冻结理解组件
 
