@@ -11,6 +11,9 @@
   <h4 style="margin: 15px 0; color: #2c3e50;">
     🚀 Just 6 × 80GB A100s × 4.5 hours to boost BAGEL performance across all tasks! Our BAGEL outperforms FLUX-Kontext in image editing capabilities!
   </h4>
+  <h4 style="margin: 15px 0; color: #2c3e50;">
+    🌈 Fully open-source and reproducible!
+  </h4>
 
   [![Paper](https://img.shields.io/badge/paper-A42C25?style=for-the-badge&logo=arxiv&logoColor=white)](https://arxiv.org/pdf/2509.07295)
   [![alphaXiv](https://img.shields.io/badge/arXiv-A42C25?style=for-the-badge&logo=arxiv&logoColor=white&color=blue)](https://alphaxiv.org/abs/2509.07295)
@@ -36,6 +39,7 @@
 </div>
 
 ## 🔥 News
+- **2025.12.6**: Show-o training code is released!
 - **2025.12.5**: 🔥 We evaluate our fine-tuned model on [T2I-Compbench](https://github.com/WayneJin0918/SRUM/tree/main/CompBench_eval). Many thanks to [Weiyang](https://waynejin0918.github.io/home/)!
 - **2025.12.5**: OpenUni training code is released!
 - **2025.9.15**: 🔥 Add NF4, INT8, DF11 version of BAGEL-RecA! Thank to @theunlikely!
@@ -52,7 +56,9 @@
 - [🍭 Results](#-results)
 - [🎨 Edit Comparison](#-edit-comparison)
 - [🚧 TODO](#-todo)
-- [📮 Contact](#-contact)
+- [� Acknowledgments](#-acknowledgments)
+- [📜 License](#-license)
+- [�📮 Contact](#-contact)
 - [📄 Citation](#-citation)
 
 ## 🔧 Quick Start!
@@ -80,7 +86,9 @@ You can also download weight of NF4 and INT8 version of BAGEL in [BAGEL-RecA](ht
 
 - **[Harmon Installation Guide](./Harmon/README.md)**: Comprehensive instructions for Harmon model training and evaluation.
 
-- **[OpenUni Installation Guide](./OpenUni/README.md)**: Detailed training and evaluation guide for OpenUni models.
+- **[OpenUni Training Guide](./OpenUni/README.md)**: Detailed training and evaluation guide for OpenUni models.
+
+- **[Show-o Training Guide](./Show-o/README.md)**: Comprehensive training guide for Show-o models with CLIP and VQGAN variants.
 
 - **[Benchmark Evaluation Guide](./Benchmark/README.md)**: Multi-benchmark evaluation scripts and setup instructions.
 
@@ -142,7 +150,13 @@ Our method demonstrates superior image editing capabilities compared to state-of
 - [ ] Further scale-up BAGEL training.
 - [ ] Add support for new UMM architectures like Janus-Pro (TODO) and Show-o2.
 
-## License
+## 🙏 Acknowledgments
+
+This project is built upon several excellent open-source projects: **[BAGEL](https://github.com/ByteDance-Seed/Bagel)**, **[Harmon](https://github.com/wusize/Harmon)**, **[OpenUni](https://github.com/wusize/OpenUni)**, **[Show-o](https://github.com/showlab/Show-o)**. We sincerely thank the authors for their contributions:
+
+We are grateful to the broader research community for their open-source spirit and collaborative efforts.
+
+## 📜 License
 
 The majority of RecA is licensed under the [Apache License](LICENSE), however portions of the project are available under their own license terms: BAGEL and Show-o are licensed under Apache, Harmon and OpenUni are licensed under S-Lab license; If you later add other third party code, please keep this license info updated, and please let us know if that component is licensed under something other than Apache, CC-BY-NC, MIT, or CC0.
 
