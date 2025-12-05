@@ -19,7 +19,9 @@ You need to resize the input images to the **minimum acceptable resolution** tha
 
 **Why?** Many studies have found that higher-resolution visual understanding embeddings retain more pixel-level details. To encourage the model to focus on semantic-level reconstruction rather than pixel-level copying, we scale input images down to the minimum resolution acceptable by the UMM. This helps the model learn more abstract semantic representations during RecA training. Our ablation study in the paper validates this:
 
-![Resolution Ablation Study](assets/resolution.png)
+<div align="center">
+  <img src="assets/resolution.png" alt="Resolution Ablation Study" width="60%">
+</div>
 
 **More interestingly**: If the input image resolution matches the generation resolution and they share a **unified representation space** (e.g., both are VQGAN tokens, or both are SigLIP features like in RAE), the model can easily learn to simply copy-and-paste, leading to mode collapse. Taking Show-o's VQGAN variant as an example: if we input a 512×512 image (corresponding to 16×16 VQ tokens) and ask it to reconstruct 16×16 VQ tokens, the model's internal representation space collapses, and the CE loss drops to 0 after just a few thousand training steps. Scaling the input image to 256×256 solves this (preferred solution), or you can blur the input images (fallback solution).
 

@@ -19,7 +19,10 @@
 
 为什么要这样做？有不少文章发现更高分辨率的 visual understanding embeddings 会保留更多的像素细节。为了鼓励模型关注 semantic-level 的重建，而非 pixel-level 的复制，我们将输入图像缩放到 UMM 可接受的最小分辨率。这有助于模型在 RecA 训练过程中学习更抽象的 semantic representations。我们论文中的 ablation study 也验证了这一点：
 
-![分辨率消融实验图](assets/resolution.png)
+
+<div align="center">
+  <img src="assets/resolution.png" alt="Resolution Ablation Study" width="60%">
+</div>
 
 更有意思的是：如果输入图像的分辨率与生成相同，且它们处于**统一的表示空间**（举个例子，都是 VQGAN token，或者像 RAE 一样都是 siglip feature），模型很容易学会直接 copy-and-paste，从而导致模式崩塌。以 Show-o 的 VQGAN 版为例，如果我们输入 512x512 的图像（对应 16x16 个 VQ tokens），并让它重建 16x16 个 VQ tokens，模型的内部表示空间就会崩溃，训练几千步后 CE loss 就降为 0 了。将输入图像缩放到 256x256 就可解决（首选方案）。或者对输入图像进行模糊处理（次选方案）。
 

@@ -6,15 +6,15 @@
   </h1>
 
   <h4 style="margin: 15px 0; color: #2c3e50;">
-    🔧 Verified on numerous architecture: <a href="https://github.com/showlab/Show-o">Show-o (VQGAN)</a>, <a href="https://github.com/showlab/Show-o">Show-o (CLIP)</a>, <a href="https://github.com/wusize/Harmon">Harmon</a>, <a href="https://github.com/wusize/OpenUni/tree/main/scripts">OpenUni</a>, <a href="https://github.com/ByteDance-Seed/Bagel">BAGEL</a>, <a href="https://github.com/deepseek-ai/Janus">Janus-Pro</a> (ongoing)!
+    🌈 Fully open-source and reproducible!
+  </h4>
+
+  <h4 style="margin: 15px 0; color: #2c3e50;">
+    🔧 Verified on numerous architecture: <a href="https://github.com/showlab/Show-o">Show-o (VQGAN, CLIP)</a>, <a href="https://github.com/wusize/Harmon">Harmon</a>, <a href="https://github.com/wusize/OpenUni/tree/main/scripts">OpenUni</a>, <a href="https://github.com/ByteDance-Seed/Bagel">BAGEL</a>!
   </h4>
   <h4 style="margin: 15px 0; color: #2c3e50;">
     🚀 Just 6 × 80GB A100s × 4.5 hours to boost BAGEL performance across all tasks! Our BAGEL outperforms FLUX-Kontext in image editing capabilities!
   </h4>
-  <h4 style="margin: 15px 0; color: #2c3e50;">
-    🌈 Fully open-source and reproducible!
-  </h4>
-
   [![Paper](https://img.shields.io/badge/paper-A42C25?style=for-the-badge&logo=arxiv&logoColor=white)](https://arxiv.org/pdf/2509.07295)
   [![alphaXiv](https://img.shields.io/badge/arXiv-A42C25?style=for-the-badge&logo=arxiv&logoColor=white&color=blue)](https://alphaxiv.org/abs/2509.07295)
   [![Hugging Face Collection](https://img.shields.io/badge/HF_Models-fcd022?style=for-the-badge&logo=huggingface&logoColor=000)](https://huggingface.co/collections/sanaka87/realign-68ad2176380355a3dcedc068)
@@ -33,7 +33,11 @@
   <span style="font-size: 1em; color: #555;">UC Berkeley<sup>1</sup>; University of Washington<sup>2</sup></span>
 </div>
 
+<br>
+
 > **📖 Want to try RecA on your own architecture?** Please read our [**Reproduction Guide**](./REPRODUCE_GUIDE.md) or its [**Chinese Version**](./REPRODUCE_GUIDE_CN.md) first! It contains crucial details and insights that are essential for successful reproduction.
+
+<br>
 
 <div align="center">
   <img src="./assets/DEMO.jpg" alt="" style="width: 100%; margin: 10px 0;">
