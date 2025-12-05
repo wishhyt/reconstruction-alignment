@@ -33,6 +33,8 @@
 </div>
 
 ## 🔥 News
+- **2025.12.5**: 🔥 We evaluate our fine-tuned model on [T2I-Compbench](https://github.com/WayneJin0918/SRUM/tree/main/CompBench_eval). Many thanks to [Weiyang](https://waynejin0918.github.io/home/)!
+- **2025.12.5**: OpenUni training code is released!
 - **2025.9.15**: 🔥 Add NF4, INT8, DF11 version of BAGEL-RecA! Thank to @theunlikely!
 - **2025.9.14**: 🔥 Add ComfyUI guide! Try BAGEL-RecA in [ComfyUI](#-quick-start)!
 - **2025.9.11**: Harmon training code is released!
@@ -74,6 +76,8 @@ DF11 version [BAGEL-RecA](https://huggingface.co/theunlikely/BAGEL-RecA-DF11/tre
 - **[BAGEL Installation Guide](./BAGEL/README.md)**: Complete guide for BAGEL model training and evaluation.
 
 - **[Harmon Installation Guide](./Harmon/README.md)**: Comprehensive instructions for Harmon model training and evaluation.
+
+- **[OpenUni Installation Guide](./OpenUni/README.md)**: Detailed training and evaluation guide for OpenUni models.
 
 - **[Benchmark Evaluation Guide](./Benchmark/README.md)**: Multi-benchmark evaluation scripts and setup instructions.
 
@@ -127,9 +131,9 @@ Our method demonstrates superior image editing capabilities compared to state-of
 - [x] Release BAGEL training code.
 - [x] Release Harmon training code.
 - [x] Add ComfyUI guide.
-- [ ] Release Show-o and OpenUni training code.
+- [x] Release Show-o and OpenUni training code.
 - [ ] Further scale-up BAGEL training.
-- [ ] Add support for new UMM architectures like Show-o2.
+- [ ] Add support for new UMM architectures like Janus-Pro (TODO) and Show-o2.
 
 ## License
 The majority of RecA is licensed under the [Apache License](LICENSE), however portions of the project are available under their own license terms: BAGEL and Show-o are licensed under Apache, Harmon and OpenUni are licensed under S-Lab license; If you later add other third party code, please keep this license info updated, and please let us know if that component is licensed under something other than Apache, CC-BY-NC, MIT, or CC0.
