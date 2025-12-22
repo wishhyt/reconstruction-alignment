@@ -90,6 +90,8 @@ You can also download weight of NF4 and INT8 version of BAGEL in [BAGEL-RecA](ht
 
 4. Full Training & Evaluation: For detailed instructions on installation, training, and evaluation, please refer to the respective repository READMEs:
 
+- **[Benchmark Evaluation Guide](./Benchmark/README.md)**: Multi-benchmark evaluation scripts and setup instructions.
+
 - **[BAGEL Installation Guide](./BAGEL/README.md)**: Complete guide for BAGEL model training and evaluation.
 
 - **[Harmon Installation Guide](./Harmon/README.md)**: Comprehensive instructions for Harmon model training and evaluation.
@@ -97,8 +99,6 @@ You can also download weight of NF4 and INT8 version of BAGEL in [BAGEL-RecA](ht
 - **[OpenUni Training Guide](./OpenUni/README.md)**: Detailed training and evaluation guide for OpenUni models.
 
 - **[Show-o Training Guide](./Show-o/README.md)**: Comprehensive training guide for Show-o models with CLIP and VQGAN variants.
-
-- **[Benchmark Evaluation Guide](./Benchmark/README.md)**: Multi-benchmark evaluation scripts and setup instructions.
 
 ## 🏆 Model Zoo
 
