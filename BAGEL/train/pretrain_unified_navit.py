@@ -346,6 +346,24 @@ class TrainingArguments:
         metadata={"help": "Distributed training backend: 'nccl' (GPU only, fastest), 'gloo' (CPU/GPU compatible), or 'mpi'."}
     )
 
+    # --- Memory optimization ---
+    gradient_accumulation_steps: int = field(
+        default=1,
+        metadata={"help": "Number of gradient accumulation steps. Increase to reduce memory usage while maintaining effective batch size."}
+    )
+    vae_encode_batch_size: int = field(
+        default=0,
+        metadata={"help": "Batch size for VAE encoding. Set to 0 to encode all images at once, or a positive number to encode in mini-batches to save memory."}
+    )
+    empty_cache_every: int = field(
+        default=0,
+        metadata={"help": "Clear CUDA cache every N steps. Set to 0 to disable. Helps reduce memory fragmentation."}
+    )
+    disable_ema: bool = field(
+        default=False,
+        metadata={"help": "Disable EMA model to save memory. Not recommended for final training but useful for debugging or limited memory."}
+    )
+
 
 def main():
     assert torch.cuda.is_available()
@@ -490,11 +508,19 @@ def main():
         num_replicate=training_args.num_replicate,
         num_shard=training_args.num_shard,
     )
-    ema_model = deepcopy(model)
-    model, ema_model = FSDPCheckpoint.try_load_ckpt(
-        resume_from, logger, model, ema_model, resume_from_ema=True
-    )
-    ema_model = fsdp_ema_setup(ema_model, fsdp_config)
+    # Create EMA model only if not disabled (saves ~50% memory when disabled)
+    if training_args.disable_ema:
+        ema_model = None
+        logger.info("EMA model disabled to save memory.")
+        model, _ = FSDPCheckpoint.try_load_ckpt(
+            resume_from, logger, model, None, resume_from_ema=True
+        )
+    else:
+        ema_model = deepcopy(model)
+        model, ema_model = FSDPCheckpoint.try_load_ckpt(
+            resume_from, logger, model, ema_model, resume_from_ema=True
+        )
+        ema_model = fsdp_ema_setup(ema_model, fsdp_config)
     fsdp_model = fsdp_wrapper(model, fsdp_config)
     apply_activation_checkpointing(
         fsdp_model, 
@@ -585,11 +611,13 @@ def main():
     if training_args.visual_gen:
         vae_model.to(device).eval()
     fsdp_model.train()
-    ema_model.eval()
+    if ema_model is not None:
+        ema_model.eval()
 
     # train loop
     start_time = time()
     logger.info(f"Training for {training_args.total_steps} steps, starting at {train_step}...")
+    
     for curr_step, data in enumerate(train_loader, start=train_step):
         data = data.cuda(device).to_dict()
         data_indexes = data.pop('batch_data_indexes', None)
@@ -600,7 +628,18 @@ def main():
         with torch.amp.autocast("cuda", enabled=True, dtype=torch.bfloat16):
             if training_args.visual_gen:
                 with torch.no_grad():
-                    data['padded_latent'] = vae_model.encode(data.pop('padded_images'))
+                    images = data.pop('padded_images')
+                    # Memory-efficient VAE encoding: encode in mini-batches if configured
+                    if training_args.vae_encode_batch_size > 0 and images.shape[0] > training_args.vae_encode_batch_size:
+                        latent_chunks = []
+                        for i in range(0, images.shape[0], training_args.vae_encode_batch_size):
+                            chunk = images[i:i + training_args.vae_encode_batch_size]
+                            latent_chunks.append(vae_model.encode(chunk))
+                        data['padded_latent'] = torch.cat(latent_chunks, dim=0)
+                        del latent_chunks  # Free memory immediately
+                    else:
+                        data['padded_latent'] = vae_model.encode(images)
+                    del images  # Free original images to save memory
             loss_dict = fsdp_model(**data)
 
         loss = 0
@@ -639,7 +678,14 @@ def main():
         total_norm = fsdp_model.clip_grad_norm_(training_args.max_grad_norm)
         optimizer.step()
         scheduler.step()
-        fsdp_ema_update(ema_model, fsdp_model, decay=training_args.ema)
+        
+        # Update EMA model if enabled
+        if ema_model is not None:
+            fsdp_ema_update(ema_model, fsdp_model, decay=training_args.ema)
+        
+        # Periodically clear CUDA cache to reduce memory fragmentation
+        if training_args.empty_cache_every > 0 and curr_step % training_args.empty_cache_every == 0:
+            torch.cuda.empty_cache()
 
         # Log loss values:
         if curr_step % training_args.log_every == 0:

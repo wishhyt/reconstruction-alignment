@@ -91,6 +91,25 @@ Before training, configure your dataset paths in `data/configs/dataset_info.py`:
 
 Configure the training environment and start the training process:
 
+#### GPU Selection (指定GPU入口)
+
+You can specify which GPUs to use for training by setting the `CUDA_VISIBLE_DEVICES` environment variable **before** running the training command:
+
+```bash
+# Use GPU 0 and 1 only
+export CUDA_VISIBLE_DEVICES=0,1
+
+# Use GPU 2, 3, 4, 5
+export CUDA_VISIBLE_DEVICES=2,3,4,5
+
+# Use a single GPU (GPU 0)
+export CUDA_VISIBLE_DEVICES=0
+```
+
+**Important:** The `--nproc_per_node` parameter should match the number of GPUs specified in `CUDA_VISIBLE_DEVICES`.
+
+#### Basic Training Example
+
 ```bash
 export master_addr=localhost
 export master_port=12345
@@ -121,6 +140,60 @@ torchrun \
   --use_flex \
   --lr 0.00004 \
 ```
+
+#### Memory-Efficient Training (显存优化训练)
+
+For training on GPUs with limited memory, you can use the following memory optimization options:
+
+```bash
+export CUDA_VISIBLE_DEVICES=0,1  # Specify GPUs to use
+export master_addr=localhost
+export master_port=12345
+export output_path='./'
+export ckpt_path='./checkpoints'
+export PYTHONPATH=.
+
+torchrun \
+  --nnodes=1 \
+  --node_rank=0 \
+  --nproc_per_node=2 \
+  --master_addr=$master_addr \
+  --master_port=$master_port \
+  train/pretrain_unified_navit.py \
+  --model_path 'ckpt/BAGEL-7B-MoT' \
+  --dataset_config_file ./data/configs/example.yaml \
+  --layer_module Qwen2MoTDecoderLayer \
+  --max_latent_size 64 \
+  --freeze_vae True \
+  --freeze_vit True \
+  --freeze_und True \
+  --finetune_from_ema True \
+  --resume_from 'ckpt/BAGEL-7B-MoT' \
+  --results_dir $output_path \
+  --checkpoint_dir $ckpt_path \
+  --log_every 1 \
+  --wandb_runid 1 \
+  --use_flex \
+  --lr 0.00004 \
+  --cpu_offload True \
+  --vae_encode_batch_size 4 \
+  --empty_cache_every 10 \
+  --disable_ema True \
+  --sharding_strategy FULL_SHARD \
+```
+
+**Memory Optimization Options:**
+
+| Parameter | Description | Memory Savings |
+|-----------|-------------|----------------|
+| `--cpu_offload True` | Offload model parameters to CPU when not in use | High |
+| `--disable_ema True` | Disable EMA model (saves ~50% model memory) | High |
+| `--vae_encode_batch_size N` | Encode images in batches of N to reduce peak memory | Medium |
+| `--empty_cache_every N` | Clear CUDA cache every N steps to reduce fragmentation | Low |
+| `--sharding_strategy FULL_SHARD` | Use full sharding instead of hybrid (more memory efficient) | High |
+| `--freeze_vit True` | Freeze ViT weights (no gradients needed) | Medium |
+| `--freeze_und True` | Freeze understanding connector | Low |
+| `--max_latent_size 32` | Reduce latent size (default 64, use 32 for lower memory) | Medium |
 
 After training, you can transfer your ckpt into hf format:
 
